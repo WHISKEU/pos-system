@@ -12,6 +12,11 @@
         <a href="<?= site_url('about') ?>">About</a>
         <a href="<?= site_url('customers') ?>">Customers</a>
         <a href="<?= site_url('users') ?>">Users</a>
+    <span class="nav-user">
+        Logged in as <?= esc((string) session()->get('username')) ?>
+    </span>
+
+    <a href="<?= site_url('logout') ?>">Logout</a>
     </nav>
 
     <h1>New User</h1>
@@ -32,7 +37,24 @@
                 <?= validation_show_error('username') ?>
             </div>
         </div>
+        <div class="form-group">
+            <label for="password">Password</label>
 
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                minlength="8"
+            >
+
+            <?php if (session('errors.password')): ?>
+                <div class="error">
+                    <?= esc(session('errors.password')) ?>
+                    <?= csrf_field() ?>
+                </div>
+            <?php endif; ?>
+        </div>
         <div>
             <label for="full_name">Full Name</label>
             <input

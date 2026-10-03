@@ -26,8 +26,9 @@ class Users extends BaseController
     public function create()
     {
         $rules = [
-            'username' => 'required|max_length[50]|is_unique[users.username]',
-            'full_name' => 'required|max_length[100]'
+            'username'  => 'required|max_length[50]|is_unique[users.username]',
+            'full_name' => 'required|max_length[100]',
+            'password'  => 'required|min_length[8]|max_length[255]'
         ];
 
         if (! $this->validate($rules)) {
@@ -37,8 +38,12 @@ class Users extends BaseController
         $userModel = new UserModel();
 
         $userModel->insert([
-            'username' => trim((string) $this->request->getPost('username')),
-            'full_name' => trim((string) $this->request->getPost('full_name'))
+            'username'  => trim((string) $this->request->getPost('username')),
+            'full_name' => trim((string) $this->request->getPost('full_name')),
+            'password'  => password_hash(
+                (string) $this->request->getPost('password'),
+                PASSWORD_DEFAULT
+            )
         ]);
 
         return redirect()->to(site_url('users'))
