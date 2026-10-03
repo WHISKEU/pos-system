@@ -10,14 +10,23 @@ SimplePOS is a basic Point-of-Sale website built with CodeIgniter 4. The Custome
 - User Accounts page
 - MySQL database integration
 - CodeIgniter Models and Query Builder
+- Create and edit customer accounts
+- Create and edit user accounts
+- Server-side form validation
+- Unique username validation
+- Philippine mobile number validation
+- JPG and PNG avatar upload up to 2 MB
+- Automatic 300 × 300 avatar preparation
+- Default avatar placeholder
 
-## Requirements
+## Uses
 
 - PHP
 - Composer
 - XAMPP
 - MySQL
 - CodeIgniter 4
+- PHP GD extension enabled for image resizing
 
 ## Installation
 

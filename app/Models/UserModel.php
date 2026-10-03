@@ -13,6 +13,11 @@ class UserModel extends Model
     protected $allowedFields = [
         'username',
         'full_name',
-        'created_at'
+        'avatar'
     ];
+
+    protected $useTimestamps = true;
+    protected $dateFormat = 'datetime';
+    protected $createdField = 'created_at';
+    protected $updatedField = '';
 }

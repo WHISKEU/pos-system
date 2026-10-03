@@ -14,26 +14,85 @@
         <a href="<?= site_url('users') ?>">Users</a>
     </nav>
 
-    <h1>User Accounts</h1>
+    <main class="accounts-container">
+        <div class="accounts-header">
+            <h1>User Accounts</h1>
 
-    <table border="1" cellpadding="10">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Full Name</th>
-                <th>Created At</th>
-            </tr>
-        </thead>
+            <a class="add-button" href="<?= site_url('users/new') ?>">
+                + Add New User
+            </a>
+        </div>
 
-        <tbody>
-            <?php foreach ($users as $user): ?>
-                <tr>
-                    <td><?= esc($user['username']) ?></td>
-                    <td><?= esc($user['full_name']) ?></td>
-                    <td><?= esc($user['created_at']) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        <?php if (session()->getFlashdata('success')): ?>
+            <p class="success-message">
+                <?= esc(session()->getFlashdata('success')) ?>
+            </p>
+        <?php endif; ?>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Username</th>
+                        <th>Full Name</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($users as $user): ?>
+                        <?php
+                            $avatar = $user['avatar'] ?? '';
+
+                            if (
+                                $avatar !== ''
+                                && is_file(
+                                    FCPATH . 'uploads/avatars/' . $avatar
+                                )
+                            ) {
+                                $avatarUrl = base_url(
+                                    'uploads/avatars/' . $avatar
+                                );
+                            } else {
+                                $avatarUrl = base_url(
+                                    'uploads/avatars/default-avatar.svg'
+                                );
+                            }
+                        ?>
+
+                        <tr>
+                            <td>
+                                <img
+                                    class="user-avatar"
+                                    src="<?= esc($avatarUrl, 'attr') ?>"
+                                    alt="<?= esc(
+                                        $user['full_name'],
+                                        'attr'
+                                    ) ?> avatar"
+                                >
+                            </td>
+
+                            <td><?= esc($user['username']) ?></td>
+                            <td><?= esc($user['full_name']) ?></td>
+                            <td><?= esc($user['created_at']) ?></td>
+
+                            <td>
+                                <a
+                                    class="edit-button"
+                                    href="<?= site_url(
+                                        'users/' . $user['id'] . '/edit'
+                                    ) ?>"
+                                >
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </main>
 </body>
 </html>
