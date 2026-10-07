@@ -65,7 +65,13 @@ class Customers extends BaseController
         $rules = [
             'full_name' => 'required|max_length[100]',
             'email'     => 'required|valid_email|max_length[100]',
-            'phone'     => 'permit_empty|max_length[20]'
+            'phone' => [
+            'label' => 'Phone number',
+            'rules' => 'permit_empty|regex_match[/^09[0-9]{9}$/]',
+            'errors' => [
+                'regex_match' => 'Enter an 11-digit Philippine mobile number starting with 09.'
+                ]
+            ]
         ];
 
         if (! $this->validate($rules)) {
